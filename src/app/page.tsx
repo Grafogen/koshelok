@@ -1,78 +1,63 @@
-'use client'
-import Image from "next/image";
-import {Inter} from "next/font/google";
-import {Header} from "./../../components/header";
-import {useCallback, useState} from "react";
-import {ethers} from "ethers";
+import '../styles/global.css';
+import '@rainbow-me/rainbowkit/styles.css';
+import type { AppProps } from 'next/app';
+import {
+    RainbowKitProvider,
+    getDefaultWallets,
+    getDefaultConfig,
+} from '@rainbow-me/rainbowkit';
+import {
+    argentWallet,
+    trustWallet,
+    ledgerWallet,
+} from '@rainbow-me/rainbowkit/wallets';
+import { WagmiProvider } from 'wagmi';
+import {
+    arbitrum,
+    base,
+    mainnet,
+    optimism,
+    polygon,
+    sepolia,
+} from 'wagmi/chains';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-const inter = Inter({subsets: ["latin"]});
+const { wallets } = getDefaultWallets();
 
-export interface AccountType {
-    address?: string;
-    balance?: string;
-    chainId?: string;
-    network?: string;
-}
+const config = getDefaultConfig({
+    appName: 'RainbowKit demo',
+    projectId: 'YOUR_PROJECT_ID',
+    wallets: [
+        ...wallets,
+        {
+            groupName: 'Other',
+            wallets: [argentWallet, trustWallet, ledgerWallet],
+        },
+    ],
+    chains: [
+        mainnet,
+        polygon,
+        optimism,
+        arbitrum,
+        base,
+        ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true' ? [sepolia] : []),
+    ],
+    ssr: true,
+});
 
+const queryClient = new QueryClient();
 
-export default function Home() {
-    const [accountData, setAccountData] = useState<AccountType>({});
-    const _connectToMetaMask = useCallback(async () => {
-        const ethereum = window.ethereum;
-        // Check if MetaMask is installed
-        if (typeof ethereum !== "undefined") {
-            try {
-                // Request access to the user's MetaMask accounts
-                const accounts = await ethereum.request({
-                    method: "eth_requestAccounts",
-                });
-                // Get the connected Ethereum address
-                const address = accounts[0];
-                console.log(address)
-                // Create an ethers.js provider using the injected provider from MetaMask
-                const provider = new ethers.BrowserProvider(ethereum);
-                // Get the account balance
-                const balance = await provider.getBalance(address);
-                // Get the network ID from MetaMask
-                const network = await provider.getNetwork();
-                // Update state with the results
-                setAccountData({
-                    address,
-                    balance: ethers.formatEther(balance),
-                    // The chainId property is a bigint, change to a string
-                    chainId: network.chainId.toString(),
-                    network: network.name,
-                });
-            } catch (error: Error | any) {
-                alert(`Error connecting to MetaMask: ${error?.message ?? error}`);
-            }
-        } else {
-            alert("MetaMask not installed");
-        }
-    }, []);
+function MyApp({ Component, pageProps }: AppProps) {
 
     return (
-        <div
-            className={`h-full flex flex-col before:from-white after:from-sky-200 py-2 ${inter.className}`}
-        >
-            <Header address={accountData.address} balance={accountData.balance} chainId={accountData.chainId} network={accountData.network}/>
-            <div className="flex flex-col flex-1 justify-center items-center">
-                <div className="grid gap-4">
-                    <Image
-                        src="https://images.ctfassets.net/9sy2a0egs6zh/4zJfzJbG3kTDSk5Wo4RJI1/1b363263141cf629b28155e2625b56c9/mm-logo.svg"
-                        alt="MetaMask"
-                        width={320}
-                        height={140}
-                        priority
-                    />
-                    <button
-                        onClick={_connectToMetaMask}
-                        className="bg-black text-white p-4 rounded-lg"
-                    >
-                        Connect to MetaMask
-                    </button>
-                </div>
-            </div>
-        </div>
-    )
+        <WagmiProvider config={config}>
+            <QueryClientProvider client={queryClient}>
+                <RainbowKitProvider >
+                    <Component {...pageProps} />
+                </RainbowKitProvider>
+            </QueryClientProvider>
+        </WagmiProvider>
+    );
 }
+
+export default MyApp;
