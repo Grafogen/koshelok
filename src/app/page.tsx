@@ -1,57 +1,19 @@
-'use client';
-import '../styles/global.css';
-import '@rainbow-me/rainbowkit/styles.css';
-import type { AppProps } from 'next/app';
-import {
-    RainbowKitProvider,
-    getDefaultWallets,
-    getDefaultConfig,
-} from '@rainbow-me/rainbowkit';
-import {
-    argentWallet,
-    trustWallet,
-    ledgerWallet,
-} from '@rainbow-me/rainbowkit/wallets';
-import { WagmiProvider } from 'wagmi';
-import {
-    arbitrum,
-    base,
-    mainnet,
-    optimism,
-    polygon,
-    sepolia,
-} from 'wagmi/chains';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ConnectButton } from '@rainbow-me/rainbowkit';
+import Wallet from "@/components/wallet";
 
-
-
-const config = getDefaultConfig({
-    appName: 'RainbowKit demo',
-    projectId: 'YOUR_PROJECT_ID',
-    chains: [
-        mainnet,
-        polygon,
-        optimism,
-        arbitrum,
-        base,
-        ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true' ? [sepolia] : []),
-    ],
-    ssr: true,
-});
-
-const queryClient = new QueryClient();
-
-function MyApp({ Component, pageProps }: AppProps) {
-
+function Page() {
     return (
-        <WagmiProvider config={config}>
-            <QueryClientProvider client={queryClient}>
-                <RainbowKitProvider >
-                    <Component {...pageProps} />
-                </RainbowKitProvider>
-            </QueryClientProvider>
-        </WagmiProvider>
+        <div
+            style={{
+                display: 'flex',
+                justifyContent: 'flex-end',
+                padding: 12,
+            }}
+        >
+            <ConnectButton />
+            <Wallet/>
+        </div>
     );
 }
 
-export default MyApp;
+export default Page;

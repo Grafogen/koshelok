@@ -14,7 +14,7 @@ const Wallet = () => (
         </Tabs.List>
         <Tabs.Content className="TabsContent" value="tab1">
             <p className="Text">There you can send some tokens to your friend</p>
-            <div style={{display: 'flex', flexDirection: 'row', }}>
+            <div className='container'>
                 <fieldset className="Fieldset" >
                     <label className="Label" htmlFor="name">
                         Amount
