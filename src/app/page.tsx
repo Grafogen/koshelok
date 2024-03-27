@@ -1,3 +1,4 @@
+'use client';
 import '../styles/global.css';
 import '@rainbow-me/rainbowkit/styles.css';
 import type { AppProps } from 'next/app';
@@ -22,18 +23,11 @@ import {
 } from 'wagmi/chains';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-const { wallets } = getDefaultWallets();
+
 
 const config = getDefaultConfig({
     appName: 'RainbowKit demo',
     projectId: 'YOUR_PROJECT_ID',
-    wallets: [
-        ...wallets,
-        {
-            groupName: 'Other',
-            wallets: [argentWallet, trustWallet, ledgerWallet],
-        },
-    ],
     chains: [
         mainnet,
         polygon,
