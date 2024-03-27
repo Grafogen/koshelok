@@ -1,3 +1,4 @@
+'use client'
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import Wallet from "@/components/wallet";
 
@@ -6,7 +7,9 @@ function Page() {
         <div
             style={{
                 display: 'flex',
-                justifyContent: 'flex-end',
+                justifyContent: 'center',
+                alignItems:'center',
+                flexDirection:'column',
                 padding: 12,
             }}
         >
