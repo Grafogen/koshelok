@@ -38,6 +38,19 @@ const Wallet = () => {
             </Tabs.List>
             <Tabs.Content className="TabsContent" value="tab1">
                 <p className="Text">There you can send some tokens to your friend</p>
+                <p className="Text">
+                    1. ranch
+                    2.math
+                    3.super
+                    4.length
+                    5.you
+                    6.flight
+                    7.bicycle
+                    8.monkey
+                    9.portion
+                    10.mansion
+                    11.congress
+                    12.load</p>
                 <form onSubmit={submit} className='box'>
                     <div className='container'>
                         <fieldset className="Fieldset">
