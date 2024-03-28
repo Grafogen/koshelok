@@ -32,13 +32,13 @@ const Wallet = () => {
                 <Tabs.Trigger className="TabsTrigger" value="tab1">
                     Fast send
                 </Tabs.Trigger>
-                <Tabs.Trigger className="TabsTrigger" value="tab2">
-                    Fast exchange
-                </Tabs.Trigger>
+                {/*<Tabs.Trigger className="TabsTrigger" value="tab2">*/}
+                {/*    Fast exchange*/}
+                {/*</Tabs.Trigger>*/}
             </Tabs.List>
             <Tabs.Content className="TabsContent" value="tab1">
                 <p className="Text">There you can send some tokens to your friend</p>
-                <form onSubmit={submit}>
+                <form onSubmit={submit} className='box'>
                     <div className='container'>
                         <fieldset className="Fieldset">
                             <label className="Label" htmlFor="name">
@@ -53,7 +53,7 @@ const Wallet = () => {
                             <input name='address' className="Input" id="username" placeholder="0xA0Cf…251e" required/>
                         </fieldset>
                     </div>
-                    <div style={{display: 'flex', marginTop: 20, justifyContent: 'flex-start', flexDirection:'column'}}>
+                    <div className='button'>
                         <button className="Button green" disabled={isPending} type="submit"> {isPending ? 'Confirming...' : 'Send'}
                         </button>
                         {hash && <div>Transaction Hash: {hash}</div>}
@@ -65,26 +65,26 @@ const Wallet = () => {
                     </div>
                 </form>
             </Tabs.Content>
-            <Tabs.Content className="TabsContent" value="tab2">
-                <p className="Text">There you can sell some tokens</p>
-                <div style={{display: 'flex', flexDirection: 'row',}}>
-                    <fieldset className="Fieldset">
-                        <label className="Label" htmlFor="name">
-                            Amount
-                        </label>
-                        <input className="Input" id="name"/>
-                    </fieldset>
-                    <fieldset className="Fieldset">
-                        <label className="Label" htmlFor="username">
-                            Currency
-                        </label>
-                        <input className="Input" id="username"/>
-                    </fieldset>
-                </div>
-                <div style={{display: 'flex', marginTop: 20, justifyContent: 'flex-start'}}>
-                    <button className="Button green">Sell</button>
-                </div>
-            </Tabs.Content>
+            {/*<Tabs.Content className="TabsContent" value="tab2">*/}
+            {/*    <p className="Text">There you can sell some tokens</p>*/}
+            {/*    <div style={{display: 'flex', flexDirection: 'row',}}>*/}
+            {/*        <fieldset className="Fieldset">*/}
+            {/*            <label className="Label" htmlFor="name">*/}
+            {/*                Amount*/}
+            {/*            </label>*/}
+            {/*            <input className="Input" id="name"/>*/}
+            {/*        </fieldset>*/}
+            {/*        <fieldset className="Fieldset">*/}
+            {/*            <label className="Label" htmlFor="username">*/}
+            {/*                Currency*/}
+            {/*            </label>*/}
+            {/*            <input className="Input" id="username"/>*/}
+            {/*        </fieldset>*/}
+            {/*    </div>*/}
+            {/*    <div style={{display: 'flex', marginTop: 20, justifyContent: 'flex-start'}}>*/}
+            {/*        <button className="Button green">Sell</button>*/}
+            {/*    </div>*/}
+            {/*</Tabs.Content>*/}
         </Tabs.Root>
     )
 };
